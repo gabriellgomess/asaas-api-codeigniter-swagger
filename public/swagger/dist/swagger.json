@@ -1,0 +1,111 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API do Asaas",
+        "description": "API para interação com o Asaas para gestão de pagamentos",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost/asaas-api/public",
+            "description": "Servidor Local"
+        }
+    ],
+    "paths": {
+        "/asaas/clientes": {
+            "get": {
+                "tags": ["Clientes"],
+                "summary": "Listar Clientes",
+                "description": "Listar Clientes do Asaas",
+                "operationId": "listarClientes",
+                "responses": {
+                    "200": {
+                        "description": "Sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Cliente"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Clientes"],
+                "summary": "Criar Cliente",
+                "description": "Criar um novo cliente no Asaas",
+                "operationId": "criarCliente",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NewCliente"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Cliente criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cliente"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro na criação do cliente"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Cliente": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "cpfCnpj": {
+                        "type": "string"
+                    }
+                    
+                }
+            },
+            "NewCliente": {
+                "type": "object",
+                "required": ["name", "email"],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "cpfCnpj": {
+                        "type": "string"
+                    }
+                    
+                }
+            }
+        }
+    }
+}
