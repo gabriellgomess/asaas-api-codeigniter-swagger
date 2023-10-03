@@ -7,17 +7,30 @@
     },
     "servers": [
         {
-            "url": "http://localhost/asaas-api/public",
+            "url": "http://localhost/asaas-api-codeigniter-swagger/public",
             "description": "Servidor Local"
         }
     ],
     "paths": {
         "/asaas/clientes": {
             "get": {
-                "tags": ["Clientes"],
+                "tags": [
+                    "Clientes"
+                ],
                 "summary": "Listar Clientes",
                 "description": "Listar Clientes do Asaas",
                 "operationId": "listarClientes",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Access Token"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Sucesso",
@@ -35,10 +48,23 @@
                 }
             },
             "post": {
-                "tags": ["Clientes"],
+                "tags": [
+                    "Clientes"
+                ],
                 "summary": "Criar Cliente",
                 "description": "Criar um novo cliente no Asaas",
                 "operationId": "criarCliente",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Access Token"
+                    }
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -65,6 +91,139 @@
                     }
                 }
             }
+        },
+        "/asaas/clientes/{clienteId}": {
+            "get": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Buscar Cliente por ID",
+                "operationId": "buscarClientePorId",
+                "parameters": [
+                    {
+                        "name": "clienteId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "ID do Cliente"
+                    },
+                    {
+                        "name": "access_token",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Access Token"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cliente"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Cliente não encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Atualizar Cliente",
+                "description": "Atualizar um cliente no Asaas",
+                "operationId": "atualizarCliente",
+                "parameters": [
+                    {
+                        "name": "clienteId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "ID do Cliente"
+                    },
+                    {
+                        "name": "access_token",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Access Token"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NewCliente"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Cliente atualizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cliente"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro na atualização do cliente"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Deletar Cliente",
+                "description": "Deletar um cliente no Asaas",
+                "operationId": "deletarCliente",
+                "parameters": [
+                    {
+                        "name": "clienteId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "ID do Cliente"
+                    },
+                    {
+                        "name": "access_token",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Access Token"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cliente deletado com sucesso"
+                    },
+                    "404": {
+                        "description": "Cliente não encontrado"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -73,38 +232,188 @@
                 "type": "object",
                 "properties": {
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Nome do cliente"
                     },
                     "email": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "email",
+                        "description": "E-mail do cliente"
                     },
                     "phone": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Número de telefone do cliente"
                     },
                     "cpfCnpj": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "CPF ou CNPJ do cliente"
                     }
-                    
-                }
+                },
+                "required": [
+                    "name",
+                    "email"
+                ]
             },
             "NewCliente": {
                 "type": "object",
-                "required": ["name", "email"],
                 "properties": {
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Nome do cliente"
                     },
                     "email": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "email",
+                        "description": "E-mail do cliente"
                     },
                     "phone": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Número de telefone do cliente"
+                    },
+                    "mobilePhone": {
+                        "type": "string",
+                        "description": "Número de celular do cliente"
                     },
                     "cpfCnpj": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "CPF ou CNPJ do cliente"
+                    },
+                    "postalCode": {
+                        "type": "string",
+                        "description": "Código postal do cliente"
+                    },
+                    "address": {
+                        "type": "string",
+                        "description": "Endereço do cliente"
+                    },
+                    "addressNumber": {
+                        "type": "string",
+                        "description": "Número do endereço do cliente"
+                    },
+                    "complement": {
+                        "type": "string",
+                        "description": "Complemento do endereço do cliente"
+                    },
+                    "province": {
+                        "type": "string",
+                        "description": "Província ou bairro do cliente"
+                    },
+                    "externalReference": {
+                        "type": "string",
+                        "description": "Referência externa do cliente"
+                    },
+                    "notificationDisabled": {
+                        "type": "boolean",
+                        "description": "Se a notificação está desativada para o cliente"
+                    },
+                    "additionalEmails": {
+                        "type": "string",
+                        "description": "Emails adicionais do cliente"
+                    },
+                    "municipalInscription": {
+                        "type": "string",
+                        "description": "Inscrição municipal do cliente"
+                    },
+                    "stateInscription": {
+                        "type": "string",
+                        "description": "Inscrição estadual do cliente"
+                    },
+                    "observations": {
+                        "type": "string",
+                        "description": "Observações adicionais sobre o cliente"
                     }
-                    
+                },
+                "required": [
+                    "name",
+                    "cpfCnpj"
+                ]
+            },
+            "UpdateCliente": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Nome do cliente"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "description": "E-mail do cliente"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "description": "Número de telefone do cliente"
+                    },
+                    "mobilePhone": {
+                        "type": "string",
+                        "description": "Número de celular do cliente"
+                    },
+                    "cpfCnpj": {
+                        "type": "string",
+                        "description": "CPF ou CNPJ do cliente"
+                    },
+                    "postalCode": {
+                        "type": "string",
+                        "description": "Código postal do cliente"
+                    },
+                    "address": {
+                        "type": "string",
+                        "description": "Endereço do cliente"
+                    },
+                    "addressNumber": {
+                        "type": "string",
+                        "description": "Número do endereço do cliente"
+                    },
+                    "complement": {
+                        "type": "string",
+                        "description": "Complemento do endereço do cliente"
+                    },
+                    "province": {
+                        "type": "string",
+                        "description": "Província ou bairro do cliente"
+                    },
+                    "externalReference": {
+                        "type": "string",
+                        "description": "Referência externa do cliente"
+                    },
+                    "notificationDisabled": {
+                        "type": "boolean",
+                        "description": "Se a notificação está desativada para o cliente"
+                    },
+                    "additionalEmails": {
+                        "type": "string",
+                        "description": "Emails adicionais do cliente"
+                    },
+                    "municipalInscription": {
+                        "type": "string",
+                        "description": "Inscrição municipal do cliente"
+                    },
+                    "stateInscription": {
+                        "type": "string",
+                        "description": "Inscrição estadual do cliente"
+                    },
+                    "observations": {
+                        "type": "string",
+                        "description": "Observações adicionais sobre o cliente"
+                    }
                 }
+            },
+            "DeleteClient":{
+                "type": "object",
+                "properties": {
+                    "deleted": {
+                        "type": "boolean",
+                        "description": "Se o cliente foi deletado"
+                    }
+                }
+            
+            }
+        },
+        "securitySchemes": {
+            "ApiKeyAuth": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "access_token"
             }
         }
     }
