@@ -55,28 +55,28 @@ class ClientesModel extends Model
         ];
     }
 
-    public function buscarClientes($apiKey) // Adicionando $apiKey como parâmetro
-    {
-        return $this->executeCurl('https://www.asaas.com/api/v3/customers', 'GET', null, $apiKey);
+    public function buscarClientes($apiKey)
+    {       
+        return $this->executeCurl(env('app.AsaasURL') . 'customers', 'GET', null, $apiKey);
     }
 
-    public function buscarCliente($id, $apiKey) // Adicionando $apiKey como parâmetro
+    public function buscarCliente($id, $apiKey)
     {
-        return $this->executeCurl('https://www.asaas.com/api/v3/customers/' . $id, 'GET', null, $apiKey);
+        return $this->executeCurl(env('app.AsaasURL') . 'customers/' . $id, 'GET', null, $apiKey);
     }
 
-    public function criarCliente($data, $apiKey) // Adicionando $apiKey como parâmetro
+    public function criarCliente($data, $apiKey)
     {
-        return $this->executeCurl('https://www.asaas.com/api/v3/customers', 'POST', $data, $apiKey);
+        return $this->executeCurl(env('app.AsaasURL') . 'customers', 'POST', $data, $apiKey);
     }
 
-    public function atualizarCliente($id, $data, $apiKey) // Adicionando $apiKey como parâmetro
+    public function atualizarCliente($id, $data, $apiKey)
     {
-        return $this->executeCurl('https://www.asaas.com/api/v3/customers/' . $id, 'PUT', $data, $apiKey);
+        return $this->executeCurl(env('app.AsaasURL') . 'customers/' . $id, 'PUT', $data, $apiKey);
     }
 
-    public function deletarCliente($id, $apiKey) // Adicionando $apiKey como parâmetro
+    public function deletarCliente($id, $apiKey)
     {
-        return $this->executeCurl('https://www.asaas.com/api/v3/customers/' . $id, 'DELETE', null, $apiKey);
+        return $this->executeCurl(env('app.AsaasURL') . 'customers/' . $id, 'DELETE', null, $apiKey);
     }
 }

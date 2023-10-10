@@ -12,7 +12,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost/asaas-api-codeigniter-swagger/public",
+            "url": "http://localhost/asaas-api/public",
             "description": "Servidor Local"
         }
     ],
@@ -352,6 +352,59 @@
                         "description": "Cobrança não encontrada"
                     }
                 }
+            },
+            "put": {
+                "tags": [
+                    "Cobrancas"
+                ],
+                "summary": "Atualizar Cobrança",
+                "description": "Atualizar uma cobrança no Asaas",
+                "operationId": "atualizarCobranca",
+                "parameters": [
+                    {
+                        "name": "cobrancaId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "ID da Cobrança"
+                    },
+                    {
+                        "name": "access_token",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Access Token"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateBilling"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Cobrança atualizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cobranca"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro na atualização da cobrança"
+                    }
+                }            
             }
         }
     },
@@ -663,6 +716,141 @@
                     "value",
                     "dueDate"
                 ]
+            },
+            "UpdateBilling": {
+                "type": "object",
+                "properties": {
+                    "customer": {
+                        "type": "string",
+                        "description": "ID do cliente"
+                    },
+                    "billingType": {
+                        "type": "string",
+                        "description": "Tipo de cobrança"
+                    },
+                    "value": {
+                        "type": "number",
+                        "description": "Valor da cobrança"
+                    },
+                    "dueDate": {
+                        "type": "string",
+                        "description": "Data de vencimento da cobrança"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Descrição da cobrança"
+                    },
+                    "externalReference": {
+                        "type": "string",
+                        "description": "Referência externa da cobrança"
+                    },
+                    "installmentCount": {
+                        "type": "integer",
+                        "description": "Número de parcelas da cobrança"
+                    },
+                    "installmentValue": {
+                        "type": "number",
+                        "description": "Valor da parcela da cobrança"
+                    },
+                    "discount": {
+                        "type": "object",
+                        "description": "Desconto da cobrança",
+                        "properties": {
+                            "value": {
+                                "type": "number",
+                                "description": "Valor do desconto"
+                            },
+                            "dueDateLimitDays": {
+                                "type": "integer",
+                                "description": "Número de dias para o desconto"
+                            }
+                        }
+                    },
+                    "interest": {
+                        "type": "object",
+                        "description": "Juros da cobrança",
+                        "properties": {
+                            "value": {
+                                "type": "number",
+                                "description": "Valor do juros"
+                            },
+                            "type": {
+                                "type": "string",
+                                "description": "Tipo de juros"
+                            }
+                        }
+                    },
+
+                   
+                    },
+                    "interest": {
+                        "type": "object",
+                        "description": "Juros da cobrança",
+                        "properties": {
+                            "value": {
+                                "type": "number",
+                                "description": "Valor do juros"
+                            },
+                            "type": {
+                                "type": "string",
+                                "description": "Tipo de juros"
+                            }
+                        }
+                    },
+                    "fine": {
+                        "type": "object",
+                        "description": "Multa da cobrança",
+                        "properties": {
+                            "value": {
+                                "type": "number",
+                                "description": "Valor da multa"
+                            },
+                            "type": {
+                                "type": "string",
+                                "description": "Tipo de multa"
+                            }
+                        }
+                    },
+                    "postalService": {
+                        "type": "boolean",
+                        "description": "Se a cobrança é por serviço postal"
+                    },
+                    "split": {
+                        "type": "object",
+                        "description": "Split de Pagamento",
+                        "properties": {
+                            "walletId": {
+                                "type": "string",
+                                "description": "ID da carteira"
+                            },
+                            "fixedValue": {
+                                "type": "string",
+                                "description": "Valor fixo a ser transferido para a conta quando a cobrança for recebida"
+                            },
+                            "percentualValue": {
+                                "type": "string",
+                                "description": "Valor percentual a ser transferido para a conta quando a cobrança for recebida"
+                            },
+                            "totalFixedValue": {
+                                "type": "string",
+                                "description": "(Somente parcelamentos). Valor que será feito split referente ao valor total que será parcelado."
+                            }
+                        }
+                    },
+                    "callback": {
+                        "type": "object",
+                        "description": "Callback da cobrança",
+                        "properties": {
+                            "successUrl": {
+                                "type": "string",
+                                "description": "URL que o cliente será redirecionado após o pagamento com sucesso da fatura ou link de pagamento"
+                            },
+                            "autoRedirect": {
+                                "type": "boolean",
+                                "description": "Definir se o cliente será redirecionado automaticamente ou será apenas informado com um botão para retornar ao site. O padrão é true, caso queira desativar informar false"
+                            }
+                        }
+                    }
             }
         }
     },
