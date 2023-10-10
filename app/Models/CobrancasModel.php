@@ -57,22 +57,21 @@ class CobrancasModel extends Model
 
     public function buscarCobrancas($apiKey)
     {
-        return $this->executeCurl(env('app.AsaasURL').'payments', 'GET', null, $apiKey);                                   
+        return $this->executeCurl(env('app.AsaasURL') . 'payments', 'GET', null, $apiKey);
     }
 
     public function buscarCobranca($id, $apiKey)
     {
-        return $this->executeCurl(env('app.AsaasURL').'payments/' . $id, 'GET', null, $apiKey);
+        return $this->executeCurl(env('app.AsaasURL') . 'payments/' . $id, 'GET', null, $apiKey);
     }
 
     public function criarCobranca($data, $apiKey)
     {
-        return $this->executeCurl(env('app.AsaasURL').'payments', 'POST', $data, $apiKey);
+        return $this->executeCurl(env('app.AsaasURL') . 'payments', 'POST', $data, $apiKey);
     }
 
     public function atualizarCobranca($id, $data, $apiKey)
     {
-        return $this->executeCurl(env('app.AsaasURL').'payments/' . $id, 'PUT', $data, $apiKey);
+        return $this->executeCurl(env('app.AsaasURL') . 'payments/' . $id, 'PUT', $data, $apiKey);
     }
-
 }

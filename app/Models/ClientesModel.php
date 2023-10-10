@@ -56,7 +56,7 @@ class ClientesModel extends Model
     }
 
     public function buscarClientes($apiKey)
-    {       
+    {
         return $this->executeCurl(env('app.AsaasURL') . 'customers', 'GET', null, $apiKey);
     }
 
