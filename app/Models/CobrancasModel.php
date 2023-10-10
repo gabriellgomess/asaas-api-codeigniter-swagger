@@ -46,7 +46,10 @@ class CobrancasModel extends Model
         curl_close($curl);
 
         if ($httpCode != 200) {
-            throw new Exception('HTTP error code: ' . $httpCode);
+            return [
+                'body' => json_decode($response, true),
+                'httpCode' => $httpCode
+            ];
         }
 
         return [
@@ -73,5 +76,10 @@ class CobrancasModel extends Model
     public function atualizarCobranca($id, $data, $apiKey)
     {
         return $this->executeCurl(env('app.AsaasURL') . 'payments/' . $id, 'PUT', $data, $apiKey);
+    }
+
+    public function cancelarCobranca($id, $apiKey)
+    {
+        return $this->executeCurl(env('app.AsaasURL') . 'payments/' . $id, 'DELETE', null, $apiKey);
     }
 }

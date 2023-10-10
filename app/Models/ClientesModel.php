@@ -46,8 +46,12 @@ class ClientesModel extends Model
         curl_close($curl);
 
         if ($httpCode != 200) {
-            throw new Exception('HTTP error code: ' . $httpCode);
+            return [
+                'body' => json_decode($response, true),
+                'httpCode' => $httpCode
+            ];
         }
+
 
         return [
             'body' => json_decode($response, true),

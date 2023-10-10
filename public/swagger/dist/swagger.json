@@ -362,7 +362,7 @@
                 "operationId": "atualizarCobranca",
                 "parameters": [
                     {
-                        "name": "Id da Cobrança",
+                        "name": "cobrancaId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -405,6 +405,42 @@
                         "description": "Erro na atualização da cobrança"
                     }
                 }            
+            },
+            "delete": {
+                "tags": [
+                    "Cobrancas"
+                ],
+                "summary": "Deletar Cobrança",
+                "description": "Deletar uma cobrança no Asaas",
+                "operationId": "deletarCobranca",
+                "parameters": [
+                    {
+                        "name": "cobrancaId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "ID da cobrança"
+                    },
+                    {
+                        "name": "access_token",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Access Token"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cobrança deletada com sucesso"
+                    },
+                    "404": {
+                        "description": "Cobrança não encontrada"
+                    }
+                }
             }
         }
     },
